@@ -26,10 +26,7 @@ function Login(props) {
             axios.post(LOGIN_URL, credentials,
 
 
-                // {
-                //     "Access-Control-Allow-Origin": "https://www.resume-sort-app.cosbe.inc",
-
-                // },
+             
                 { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)

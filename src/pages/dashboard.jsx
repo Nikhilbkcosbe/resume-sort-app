@@ -141,7 +141,7 @@ function Dashboard(props) {
             ) {
                 loadingRef.current.continuousStart();
                 axios
-                    .post(UPLOAD_RESUME, formData)
+                    .post(UPLOAD_RESUME, formData, { withCredentials: true })
                     .then((res) => {
                         console.log(res);
                         setTableData((prev) => [...prev, ...res.data.data]);
