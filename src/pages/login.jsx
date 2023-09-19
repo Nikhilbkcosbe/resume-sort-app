@@ -23,7 +23,7 @@ function Login(props) {
             alert("Email or Password can't be empty!!")
         }
         else {
-            axios.post(LOGIN_URL, credentials, { withCredentials: true, credentials: 'include' })
+            axios.post(LOGIN_URL, credentials, { withCredentials: true})
                 .then((res) => {
                     console.log(res.data)
                     dispatch(LoginEmailAction(res.data.email))
