@@ -23,7 +23,13 @@ function Login(props) {
             alert("Email or Password can't be empty!!")
         }
         else {
-            axios.post(LOGIN_URL, credentials, { withCredentials: true})
+            axios.post(LOGIN_URL, credentials,
+
+
+                {
+                    "Access-Control-Allow-Origin": "https://www.resume-sort-app.cosbe.inc",
+                    withCredentials: true
+                })
                 .then((res) => {
                     console.log(res.data)
                     dispatch(LoginEmailAction(res.data.email))
@@ -31,10 +37,10 @@ function Login(props) {
                     props.setAuthenticated(true)
                     navigate("/");
                 }).catch(err => {
-                  
-                        alert(err?.response?.data?.detail)
-                            loadingRef.current.complete()
-                   
+
+                    alert(err?.response?.data?.detail)
+                    loadingRef.current.complete()
+
                 })
         }
     }
