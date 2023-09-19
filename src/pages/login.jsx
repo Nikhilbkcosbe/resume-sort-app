@@ -28,8 +28,9 @@ function Login(props) {
 
                 {
                     "Access-Control-Allow-Origin": "https://www.resume-sort-app.cosbe.inc",
-                    withCredentials: true
-                })
+
+                },
+                { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)
                     dispatch(LoginEmailAction(res.data.email))
