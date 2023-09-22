@@ -141,7 +141,12 @@ function Dashboard(props) {
             ) {
                 loadingRef.current.continuousStart();
                 axios
-                    .post(UPLOAD_RESUME, formData, { withCredentials: true })
+                    .post(UPLOAD_RESUME, formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        }, 
+                        withCredentials: true
+                    })
                     .then((res) => {
                         console.log(res);
                         setTableData((prev) => [...prev, ...res.data.data]);
