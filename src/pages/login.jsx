@@ -24,9 +24,7 @@ function Login(props) {
         }
         else {
             axios.post(LOGIN_URL, credentials, {
-                headers: {
-                    "Access-Control-Allow-Origin": "https://www.resume-sort-app.cosbe.inc"
-                },
+             
                 withCredentials: true
             })
                 .then((res) => {
