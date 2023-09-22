@@ -23,11 +23,12 @@ function Login(props) {
             alert("Email or Password can't be empty!!")
         }
         else {
-            axios.post(LOGIN_URL, credentials,
-
-
-             
-                { withCredentials: true })
+            axios.post(LOGIN_URL, credentials, {
+                headers: {
+                    "Access-Control-Allow-Origin": "https://www.resume-sort-app.cosbe.inc"
+                },
+                withCredentials: true
+            })
                 .then((res) => {
                     console.log(res.data)
                     dispatch(LoginEmailAction(res.data.email))
