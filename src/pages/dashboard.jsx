@@ -197,9 +197,11 @@ function Dashboard(props) {
         const fileName = "resume_data"
         let csv_data = []
         tableData.forEach(eachData => {
-            csv_data.push(eachData.extracted_json_data)
+            const {name,role,year_of_experience,email,phone_number,...rest}=eachData.extracted_json_data
+            csv_data.push({name,role,year_of_experience,email,phone_number,...rest})
         })
         let selected_field = options.filter(option => option.checked === true)
+
         let filtered_data = []
         if (selected_field.length === 0) {
             filtered_data = csv_data
@@ -214,6 +216,7 @@ function Dashboard(props) {
                 return filteredEntry;
             });
         }
+
 
         const ws = XLSX.utils.json_to_sheet(filtered_data);
         const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
