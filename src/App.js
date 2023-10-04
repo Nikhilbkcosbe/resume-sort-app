@@ -49,12 +49,11 @@ function App() {
           <Route
             path="/"
             element={
-              <Home handleLogout={()=>{}}/>
-              // authenticated ? (
-              //   <Home handleLogout={handleLogout} />
-              // ) : (
-              //   <Navigate to="/login" />
-              // )
+              authenticated ? (
+                <Home handleLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
           <Route
