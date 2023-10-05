@@ -1,6 +1,6 @@
 // export const BASE_URL="http://localhost:5000"
-export const BASE_URL="https://api.resume-sort-app.cosbe.inc" 
-// export const BASE_URL = "https://f366jvbxlf.execute-api.us-east-1.amazonaws.com/dev"
+// export const BASE_URL="https://api.resume-sort-app.cosbe.inc" 
+export const BASE_URL = "https://zp6mxotg04.execute-api.us-east-1.amazonaws.com/dev"
 export const LOGIN_URL = BASE_URL + "/api/v1/resume_sort_app/auth/login"
 export const CREATE_PROJECT_URL = BASE_URL + "/api/v1/resume_sort_app/project/create"
 export const GET_ALL_PROJECTS_URL = BASE_URL + "/api/v1/resume_sort_app/projects"
