@@ -34,9 +34,9 @@ function Login(props) {
                     props.setAuthenticated(true)
                     navigate("/");
                 }).catch(err => {
-                    alert("Incorrect email or password!")
+                    // alert("Incorrect email or password!")
                     console.log(err)
-                    // alert(err?.response?.data?.detail)
+                    alert(err?.response?.data?.detail)
                     loadingRef.current.complete()
 
                 })
