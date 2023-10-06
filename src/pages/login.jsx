@@ -61,7 +61,7 @@ function Login(props) {
                                 <div className="mb-3 mt-md-4">
 
                                     <h2 className="fw-bold mb-2 text-uppercase ">
-                                        {t("Resume Sort App")}
+                                        Resume Sort App
 
                                     </h2>
 
@@ -70,11 +70,11 @@ function Login(props) {
                                     <p className="card-subtitle text-muted">Powered by CosBE</p>
                                     <br />
 
-                                    <p className=" mb-3">{t("Please enter your login and password")}!</p>
+                                    <p className=" mb-3">Please enter your login and password!</p>
                                     <div className="mb-3">
                                         <form>
                                             <div className="mb-3 from-group">
-                                                <label className="form-label">{t("Email address")}</label>
+                                                <label className="form-label">Email address</label>
                                                 <input
                                                     type="email"
                                                     name="email"
@@ -84,7 +84,7 @@ function Login(props) {
                                                 />
                                             </div>
                                             <div className="mb-3 from-group">
-                                                <label className="form-label">{t("Password")}</label>
+                                                <label className="form-label">Password</label>
                                                 <input
                                                     type="password"
                                                     name="password"
@@ -96,7 +96,7 @@ function Login(props) {
                                             <div className="mb-3 from-group">
                                                 <p className="small">
                                                     <a className="text-primary" href="#!">
-                                                        {t("Forgot password")}?
+                                                        Forgot password?
                                                     </a>
                                                 </p>
                                             </div>
@@ -106,7 +106,7 @@ function Login(props) {
                                                     className="btn btn-primary"
                                                     onClick={handleLoginSubmit}
                                                 >
-                                                    {t("Login")}
+                                                    Login
                                                 </button>
                                             </div>
                                         </form>
