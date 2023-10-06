@@ -48,7 +48,7 @@ i18n
     fallbackLng: 'en',
     debug: true,
     whitelist: ['en', 'ja'],
-    detection: options,
+    // detection: options,
     interpolation: {
       escapeValue: false,
     }

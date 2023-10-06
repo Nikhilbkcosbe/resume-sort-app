@@ -1,5 +1,5 @@
 {
- "__commom__": "",
+
   "Email": "E メール",
   "Password": "パスワード",
   "Forgot Password": "パスワードを忘れた ",
@@ -48,6 +48,7 @@
   "Resume Sort App":"レジュメソートアプリ",
   "Please enter your login and password": "アドレスとパスワードを入力して下さい",
   "Email address":"メールアドレス",
-  "Forgot password":"パスワードをお忘れですか"
+  "Forgot password":"パスワードをお忘れですか",
+  "Email or Password can't be empty":"メールアドレスまたはパスワードは空にできません"
 
 }

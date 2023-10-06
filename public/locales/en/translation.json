@@ -1,5 +1,5 @@
 {
-  "__commom__": "",
+
   "Email": "Email",
   "Password": "Password",
   "Login": "Login",
@@ -48,7 +48,8 @@
   "Resume Sort App":"Resume Sort App",
   "Please enter your login and password": "Please enter your login and password",
   "Email address":"Email address",
-  "Forgot password":"Forgot password"
+  "Forgot password":"Forgot password",
+  "Email or Password can't be empty":"Email or Password can't be empty"
 
 
 
