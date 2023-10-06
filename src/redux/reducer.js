@@ -3,7 +3,8 @@ import { combineReducers } from "@reduxjs/toolkit"
 const initialState={
     loginEmail:'',
     projectDetails:'',
-    profileDetails:''
+    profileDetails:'',
+    language:'en'
 }
 const LoginEmailReducer = (state = initialState.loginEmail, action) => {
     switch (action.type) {
@@ -29,12 +30,20 @@ const ProfileDetailsReducer = (state = initialState.profileDetails, action) => {
             return state
     }
 }
-
+const LanguageChangeReducer = (state = initialState.language, action) => {
+    switch (action.type) {
+        case 'LANGUAGE_CHANGE':
+            return action.payload
+        default:
+            return state
+    }
+}
 
 const rootReducer = combineReducers({
     LoginEmailReduxState: LoginEmailReducer,
     ProjectDetailsReduxState: ProjectDetailsReducer,
-    ProfileDetailsReduxState:ProfileDetailsReducer
+    ProfileDetailsReduxState:ProfileDetailsReducer,
+    LanguageChangeReduxState:LanguageChangeReducer
 
 })
 export default rootReducer

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 import { CreateProjectModal, DeleteProjectModal, ProjectCard } from "../components/projectModals";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 function getAllProject() {
   return axios.get(GET_ALL_PROJECTS_URL).then((res) => res.data);
@@ -41,9 +42,10 @@ export default function Home(props) {
   const [projectDetails, setProjectDetails] = useState({ projectName: "", projectDescription: "" });
   const [deletingProjectDetails, setDeletingProjectDetail] = useState({ projectName: "", projectID: "" });
   const loadingRef = useRef(null);
+  const { t } = useTranslation()
 
 
-  const email = useSelector(state=>state.LoginEmailReduxState);
+  const email = useSelector(state => state.LoginEmailReduxState);
   const handleCloseProjectCreateModal = () => setShowProjectCreateModal(false);
   const handleShowProjectCreateModal = () => setShowProjectCreateModal(true);
   const handleCloseProjectDeleteModal = () => setShowProjectDeleteModal(false);
@@ -78,7 +80,7 @@ export default function Home(props) {
       })
       .catch((err) => {
         console.log(err)
-         loadingRef.current.complete();
+        loadingRef.current.complete();
       })
   }
   function handleDeleteProject() {
@@ -86,7 +88,7 @@ export default function Home(props) {
     axios
       .delete(DELETE_PROJECT_URL + deletingProjectDetails.projectID)
       .then((res) => {
-        
+
         let tmp = projectList.filter(
           (each) => each._id !== deletingProjectDetails.projectID
         );
@@ -97,7 +99,7 @@ export default function Home(props) {
         loadingRef.current.complete();
       }).catch((err) => {
         console.log(err)
-         loadingRef.current.complete();
+        loadingRef.current.complete();
       })
   }
 
@@ -114,17 +116,17 @@ export default function Home(props) {
 
   function handleSort(e) {
     const sortCriteria = e.currentTarget.name;
-    const sortOrder = sortCriteria === "projectName" ? projectNameSortOrder :sortCriteria === "createdBy"? createdBySortOrder:createdAtSortOrder;
-  
+    const sortOrder = sortCriteria === "projectName" ? projectNameSortOrder : sortCriteria === "createdBy" ? createdBySortOrder : createdAtSortOrder;
+
     const sortedList = [...filteredSortedProjectList].sort((a, b) => {
       const aValue = a[sortCriteria].toLowerCase();
       const bValue = b[sortCriteria].toLowerCase();
-  
+
       return sortOrder === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
     });
-  
+
     setFilteredSortedProjectList(sortedList);
-  
+
     if (sortCriteria === "projectName") {
       setProjectNameSortOrder(order => (order === "asc" ? "desc" : "asc"));
     } else if (sortCriteria === "createdBy") {
@@ -133,13 +135,13 @@ export default function Home(props) {
       setCreatedAtSortOrder(order => (order === "asc" ? "desc" : "asc"));
     }
   }
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   useEffect(() => {
     getAllProject()
       .then((res) => {
@@ -151,41 +153,43 @@ export default function Home(props) {
       })
       .catch((err) => console.log(err));
   }, []);
+  let placeholder=`${t('enter project name')}`
   return (
     <div>
-        <LoadingBar color="#0d6efd" ref={loadingRef} />
+      <LoadingBar color="#0d6efd" ref={loadingRef} />
       <Navbar handleLogout={props.handleLogout} />
 
-      <h3>Projects</h3>
+      <h3>{t('Projects')}</h3>
 
       <div>
-        <h6>Search Projects</h6>
+        <h6>{t('Search Projects')}</h6>
         {/* debounce is the technique to handle efficient way to handle api call for the frequently changing component like input,mouse hover */}
         <input
           type="text"
+          style={{"width":"200px"}}
           onChange={debounce(handleSearchChange, 1000)}
-          placeholder="&#x1F50D;enter project name"
+          placeholder={`${t('enter project name')}`}
         />
       </div>
       <div>
-        <h6>Sort By</h6>
+        <h6>{t('Sort by')}</h6>
         <button name="projectName" onClick={handleSort}>
-          Project Name{"\u2191"}
+          {t('Project Name')}  {"\u2191"}
           {"\u2193"}
         </button>
         <button name="createdBy" onClick={handleSort}>
-          Created by{"\u2191"}
+          {t('Created by')}{"\u2191"}
           {"\u2193"}
         </button>
         <button name="createdAt" onClick={handleSort}>
-        Created at{"\u2191"}
-        {"\u2193"}
-      </button>
+          {t('Created at')}{"\u2191"}
+          {"\u2193"}
+        </button>
       </div>
       <br />
-      <button onClick={handleShowProjectCreateModal}>Create New Project</button>
+      <button onClick={handleShowProjectCreateModal}>{t('Create New Project')}</button>
 
-      <Container className="my-2"style={{ display: "flex", flexWrap: "wrap" }}>
+      <Container className="my-2" style={{ display: "flex", flexWrap: "wrap" }}>
         <Row>
           {filteredSortedProjectList?.map((each, idx) => (
             <Col key={idx} lg={3} md={4} sm={6} xs={12} style={{ marginBottom: "1rem", flex: "1" }}>
@@ -193,7 +197,7 @@ export default function Home(props) {
                 data={each}
                 showDeleteModal={handleShowProjectDeleteModal}
                 handleDeleteFromCard={handleDeleteFromCard}
-          
+
               />
             </Col>
           ))}

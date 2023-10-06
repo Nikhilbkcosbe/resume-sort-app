@@ -17,3 +17,10 @@ export const profileDetailsAction = (value) => {
         payload: value,
     }
 }
+
+export const changeLanguageAction = (value) => {
+    return {
+        type: 'LANGUAGE_CHANGE',
+        payload: value ,
+    }
+}

@@ -18,6 +18,7 @@ import { DOWNLOAD_RESUME, GET_RESUME_DATA, UPLOAD_RESUME } from "../config";
 import LoadingBar from "react-top-loading-bar";
 import { useDispatch, useSelector } from "react-redux";
 import { profileDetailsAction } from "../redux/actions";
+import { useTranslation } from "react-i18next";
 
 
 const MAX_NUMBER_OF_PDF_UPLOAD_LIMIT = 20;
@@ -35,7 +36,7 @@ function Dashboard(props) {
     const tableRef = useRef();
     const navigate = useNavigate();
     const loadingRef = useRef(null);
-
+    const { t } = useTranslation()
     const [files, setFiles] = useState([]);
     const [tableData, setTableData] = useState([]);
     const [columnDefs] = useState([
@@ -169,14 +170,14 @@ function Dashboard(props) {
                         setTableData((prev) => [...prev, ...res.data.data]);
                         setSelectedFiles([]);
                         loadingRef.current.complete();
-                        alert(`Uploaded ${selectedFiles.length} files successfully`);
+                        alert(` ${selectedFiles.length} ${t('Uploaded files successfully')}`);
                     })
                     .catch((err) => {
                         console.log(err);
                         loadingRef.current.complete();
                     });
             } else {
-                alert("Max limit reached");
+                alert(t("Max limit reached"));
                 setSelectedFiles([]);
                 loadingRef.current.complete();
             }
@@ -184,7 +185,7 @@ function Dashboard(props) {
                 fileInputRef.current.value = "";
             }
         } else {
-            alert("No Files Selected to upload!!");
+            alert(t("No Files Selected to upload"));
         }
     }
     // function handleShowAllAppliedFilter() {
@@ -197,8 +198,8 @@ function Dashboard(props) {
         const fileName = "resume_data"
         let csv_data = []
         tableData.forEach(eachData => {
-            const {name,role,year_of_experience,email,phone_number,...rest}=eachData.extracted_json_data
-            csv_data.push({name,role,year_of_experience,email,phone_number,...rest})
+            const { name, role, year_of_experience, email, phone_number, ...rest } = eachData.extracted_json_data
+            csv_data.push({ name, role, year_of_experience, email, phone_number, ...rest })
         })
         let selected_field = options.filter(option => option.checked === true)
 
@@ -246,7 +247,7 @@ function Dashboard(props) {
     return (
         <div>
             <Navbar handleLogout={props.handleLogout} />
-            <h1>Dashboard</h1>
+            <h1>{t("Dashboard")}</h1>
             <LoadingBar color="#0d6efd" ref={loadingRef} />
 
             {ProjectDetailsReduxState !== null ?
@@ -255,7 +256,7 @@ function Dashboard(props) {
                 <div>
                     <h3>{ProjectDetailsReduxState.projectName}</h3>
                     <p>
-                        File limit that can be uploaded {MAX_NUMBER_OF_PDF_UPLOAD_LIMIT}{" "}
+                        {t('Max number of files that can be uploaded')} {MAX_NUMBER_OF_PDF_UPLOAD_LIMIT}{" "}
                         files
                     </p>
 
@@ -270,26 +271,26 @@ function Dashboard(props) {
 
                     <p className="text-danger">
                         {remainingFiles > 0
-                            ? remainingFiles + " more file to reach limit"
+                            ? remainingFiles +` ${t("more file to reach limit")}`
                             : remainingFiles === 0
-                                ? "Limit reached"
-                                : "Limit exceeded"}
+                                ? t("Limit reached")
+                                : t("Limit exceeded")}
                     </p>
 
                     <br />
 
                     <label>
                         <button onClick={handleUpload} >
-                            Upload Files
+                            {t("Upload Files")}
                         </button>
                     </label>
 
                     <button onClick={() => tableRef.current.api.setFilterModel({})}>
-                        Clear All Filters
+                        {t("Clear All Filters")}
                     </button>
                     {/* <CSVDownload data={tableData?.extracted_json_data} target="_blank" />; */}
                     <div className="btn-group">
-                        <button type="button" onClick={handleCSVDownload} className="btn btn-primary">Download CSV</button>
+                        <button type="button" onClick={handleCSVDownload} className="btn btn-primary">{t("Download CSV")}</button>
                         <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                             <span className="visually-hidden">Toggle Dropdown</span>
                         </button>
@@ -332,10 +333,9 @@ function Dashboard(props) {
 
                 <React.Fragment>
                     <i className="text-danger">
-                        No project selected, please go back to home page and start any of
-                        the listed project!!
+                        {t("No project selected, please go back to home page and start any ofthe listed project")}
                     </i>
-                    <NavLink to="/">Click here</NavLink>
+                    <NavLink to="/">{t('Click here')}</NavLink>
                 </React.Fragment>
             }
         </div>

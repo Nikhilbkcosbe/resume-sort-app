@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { LOGIN_URL } from '../config'
 import LoadingBar from 'react-top-loading-bar'
 import axios from 'axios'
-import { LoginEmailAction } from '../redux/actions'
+import { LoginEmailAction, changeLanguageAction } from '../redux/actions'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
 
 function Login(props) {
@@ -12,7 +14,7 @@ function Login(props) {
     let navigate = useNavigate()
     const dispatch = useDispatch()
     const [credentials, setCredentials] = useState({ email: "", password: "" })
-
+    const { t } = useTranslation()
     function handleChange(event) {
         setCredentials({ ...credentials, [event.target.name]: event.target.value });
 
@@ -24,7 +26,7 @@ function Login(props) {
         }
         else {
             axios.post(LOGIN_URL, credentials, {
-             
+
                 withCredentials: true
             })
                 .then((res) => {
@@ -42,6 +44,10 @@ function Login(props) {
                 })
         }
     }
+    function languageChange(lang) {
+        i18next.changeLanguage(lang)
+        dispatch(changeLanguageAction(lang))
+    }
 
     return (
         <div>
@@ -53,16 +59,22 @@ function Login(props) {
                         <div className="card shadow">
                             <div className="card-body">
                                 <div className="mb-3 mt-md-4">
+
                                     <h2 className="fw-bold mb-2 text-uppercase ">
-                                        Resume Sort App
+                                        {t("Resume Sort App")}
+
                                     </h2>
+
+
+
                                     <p className="card-subtitle text-muted">Powered by CosBE</p>
                                     <br />
-                                    <p className=" mb-3">Please enter your login and password!</p>
+
+                                    <p className=" mb-3">{t("Please enter your login and password")}!</p>
                                     <div className="mb-3">
                                         <form>
                                             <div className="mb-3 from-group">
-                                                <label className="form-label">Email address</label>
+                                                <label className="form-label">{t("Email address")}</label>
                                                 <input
                                                     type="email"
                                                     name="email"
@@ -72,7 +84,7 @@ function Login(props) {
                                                 />
                                             </div>
                                             <div className="mb-3 from-group">
-                                                <label className="form-label">Password</label>
+                                                <label className="form-label">{t("Password")}</label>
                                                 <input
                                                     type="password"
                                                     name="password"
@@ -84,7 +96,7 @@ function Login(props) {
                                             <div className="mb-3 from-group">
                                                 <p className="small">
                                                     <a className="text-primary" href="#!">
-                                                        Forgot password?
+                                                        {t("Forgot password")}?
                                                     </a>
                                                 </p>
                                             </div>
@@ -94,17 +106,30 @@ function Login(props) {
                                                     className="btn btn-primary"
                                                     onClick={handleLoginSubmit}
                                                 >
-                                                    Login
+                                                    {t("Login")}
                                                 </button>
                                             </div>
                                         </form>
+                                        <div style={{ display: 'inline-flex' }}>
+                                            <div style={{ cursor: 'pointer', color: '#0d6efd' }} onClick={() => languageChange('en')}>
+                                                <u><span>English</span>
+                                                    <i className="bi bi-translate mx-2"></i></u>
+                                            </div>
+                                            <div style={{ cursor: 'pointer', color: '#0d6efd' }} onClick={() => languageChange('ja')}>
+                                                <u><span>Japanese</span>
+                                                    <i className="bi bi-translate mx-2"></i></u>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
+
         </div>
     )
 }
