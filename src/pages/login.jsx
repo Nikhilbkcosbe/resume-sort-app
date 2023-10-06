@@ -14,7 +14,7 @@ function Login(props) {
     let navigate = useNavigate()
     const dispatch = useDispatch()
     const [credentials, setCredentials] = useState({ email: "", password: "" })
-    const { t } = useTranslation()
+    // const { t } = useTranslation()
     function handleChange(event) {
         setCredentials({ ...credentials, [event.target.name]: event.target.value });
 
@@ -44,10 +44,10 @@ function Login(props) {
                 })
         }
     }
-    function languageChange(lang) {
-        i18next.changeLanguage(lang)
-        dispatch(changeLanguageAction(lang))
-    }
+    // function languageChange(lang) {
+    //     i18next.changeLanguage(lang)
+    //     dispatch(changeLanguageAction(lang))
+    // }
 
     return (
         <div>
@@ -110,7 +110,7 @@ function Login(props) {
                                                 </button>
                                             </div>
                                         </form>
-                                        <div style={{ display: 'inline-flex' }}>
+                                        {/* <div style={{ display: 'inline-flex' }}>
                                             <div style={{ cursor: 'pointer', color: '#0d6efd' }} onClick={() => languageChange('en')}>
                                                 <u><span>English</span>
                                                     <i className="bi bi-translate mx-2"></i></u>
@@ -119,7 +119,7 @@ function Login(props) {
                                                 <u><span>Japanese</span>
                                                     <i className="bi bi-translate mx-2"></i></u>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
