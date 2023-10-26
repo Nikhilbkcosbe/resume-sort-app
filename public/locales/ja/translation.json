@@ -49,6 +49,9 @@
   "Please enter your login and password": "アドレスとパスワードを入力して下さい",
   "Email address":"メールアドレス",
   "Forgot password":"パスワードをお忘れですか",
+  "Experience(years)":"長年の経験",
+  "Address":"アドレス",
+"References":"参考",
   "Email or Password can't be empty":"メールアドレスまたはパスワードは空にできません"
 
 }

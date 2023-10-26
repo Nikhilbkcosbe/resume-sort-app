@@ -31,6 +31,7 @@ function getResumeData(projectID) {
 
 function Dashboard(props) {
     const ProjectDetailsReduxState = useSelector(state => state.ProjectDetailsReduxState)
+    const LanguageChangeReduxState = useSelector(state => state.LanguageChangeReduxState)
     const filterState = useRef();
     const dispatch = useDispatch()
     const tableRef = useRef();
@@ -39,18 +40,19 @@ function Dashboard(props) {
     const { t } = useTranslation()
     const [files, setFiles] = useState([]);
     const [tableData, setTableData] = useState([]);
-    const [columnDefs] = useState([
+    let flag = false
+    let columnDefs = [
         {
             field: "extracted_json_data.name",
-            headerName: "Name",
+            headerName: t("Name"),
             filterParams: {
                 maxNumConditions: 3,
             },
         },
-        { field: "extracted_json_data.role", headerName: "Role" },
+        { field: "extracted_json_data.role", headerName: t("Role") },
         {
             field: "extracted_json_data.year_of_experience",
-            headerName: "Experience(years)",
+            headerName: t("Experience(years)"),
             filter: "agNumberColumnFilter",
             filterParams: {
                 filterOptions: [
@@ -66,17 +68,17 @@ function Dashboard(props) {
         },
         {
             field: "extracted_json_data.skills",
-            headerName: "Skills",
+            headerName: t("Skills"),
             filterParams: {
                 filterOptions: ["contains", "notContains", "notBlank", "blank"],
                 maxNumConditions: 10,
             },
         },
-        { field: "extracted_json_data.email", headerName: "Email" },
-        { field: "extracted_json_data.phone_number", headerName: "Phone" },
+        { field: "extracted_json_data.email", headerName: t("Email") },
+        { field: "extracted_json_data.phone_number", headerName: t("Phone") },
         {
             field: "pdf_url",
-            headerName: "Pdf",
+            headerName: t("Pdf"),
             filter: false,
             cellRenderer: function (params) {
                 return (
@@ -95,12 +97,13 @@ function Dashboard(props) {
                 );
             },
         },
-    ]);
-    const [options, setOptions] = useState([
+    ];
+
+    let [options, setOptions] = useState([
         { value: "name", label: 'Name', checked: false },
         { value: "email", label: 'Email', checked: false },
-        { value: "phone_number", label: 'Phone Number', checked: false },
-        { value: "year_of_experience", label: 'Year of Experience', checked: false },
+        { value: "phone_number", label: 'Phone', checked: false },
+        { value: "year_of_experience", label: 'Experience(years)', checked: false },
         { value: "role", label: 'Role', checked: false },
         { value: "contacts", label: 'Address', checked: false },
         { value: "summary", label: 'Summary', checked: false },
@@ -112,6 +115,7 @@ function Dashboard(props) {
         { value: "references", label: 'References', checked: false },
         { value: "projects", label: 'Projects', checked: false },
     ]);
+
     const fileInputRef = useRef(null);
     const defaultColDef = useMemo(() => {
         return {
@@ -126,6 +130,7 @@ function Dashboard(props) {
             },
         };
     }, []);
+
     const [selectedFiles, setSelectedFiles] = useState([]);
     let remainingFiles =
         MAX_NUMBER_OF_PDF_UPLOAD_LIMIT - tableData.length - selectedFiles.length;
@@ -232,7 +237,7 @@ function Dashboard(props) {
     };
     useEffect(() => {
         loadingRef.current.continuousStart();
-        console.log(ProjectDetailsReduxState?._id)
+        // console.log(ProjectDetailsReduxState?._id)
         getResumeData(ProjectDetailsReduxState?._id)
             .then((res) => {
                 console.log(res.data);
@@ -271,7 +276,7 @@ function Dashboard(props) {
 
                     <p className="text-danger">
                         {remainingFiles > 0
-                            ? remainingFiles +` ${t("more file to reach limit")}`
+                            ? remainingFiles + ` ${t("more file to reach limit")}`
                             : remainingFiles === 0
                                 ? t("Limit reached")
                                 : t("Limit exceeded")}
@@ -302,7 +307,7 @@ function Dashboard(props) {
                                         checked={option.checked}
                                         onChange={() => handleCheckboxChange(option.value)}
                                     />
-                                    {option.label}
+                                  {t(option.label)}
                                 </div>
                             ))}
                         </div>

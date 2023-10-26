@@ -18,7 +18,9 @@ function Profile(props) {
     const { t } = useTranslation()
     const location = useLocation();
     const loadingRef = useRef(null);
+    const LanguageChangeReduxState = useSelector(state => state.LanguageChangeReduxState)
     const profileData = useSelector(state => state.ProfileDetailsReduxState)
+    const [resume_data,setResumeData]=useState(LanguageChangeReduxState==="en"?profileData.extracted_json_data:profileData.extracted_json_data_ja)
     const image_path = profileData?.image_url?.split("s3.amazonaws.com/")[1];
     const [image, setImage] = useState("");
     useEffect(() => {
@@ -37,6 +39,21 @@ function Profile(props) {
         }
     }, []);
 
+useEffect(()=>{
+      if(LanguageChangeReduxState==="en"){
+        setResumeData(profileData?.extracted_json_data)
+      }
+      if(LanguageChangeReduxState==="ja"){
+        if(!profileData?.extracted_json_data_ja){
+            setResumeData(profileData?.extracted_json_data)
+        }else{
+            setResumeData(profileData?.extracted_json_data_ja)
+        }
+        // 
+      }
+
+    },[LanguageChangeReduxState])
+
     return (
         <div>
             <LoadingBar color="#0d6efd" ref={loadingRef} />
@@ -49,19 +66,19 @@ function Profile(props) {
                         <div className="d-flex flex-column">
                             <div className="d-flex justify-content-start my-2">
                                 <label>{t("Name")}:</label>
-                                <span className="">{profileData.extracted_json_data?.name}</span>
+                                <span className="">{resume_data?.name}</span>
                             </div>
                             <div className="d-flex justify-content-start  my-2">
                                 <label>{t("Role")}:</label>
-                                <span>{profileData.extracted_json_data?.role}</span>
+                                <span>{resume_data?.role}</span>
                             </div>
                             <div className="d-flex justify-content-start  my-2">
                                 <label>{t("Email")}:</label>
-                                <span>{profileData.extracted_json_data?.email}</span>
+                                <span>{resume_data?.email}</span>
                             </div>{" "}
                             <div className="d-flex justify-content-start  my-2">
                                 <label>{t("Phone")}:</label>
-                                <span>{profileData.extracted_json_data?.phone_number}</span>
+                                <span>{resume_data?.phone_number}</span>
                             </div>
                         </div>
                     </div>
@@ -71,7 +88,7 @@ function Profile(props) {
                                 <u>
                                     <h5>{t("Summary")}</h5>
                                 </u>
-                                <p>{profileData.extracted_json_data.summary}</p>
+                                <p>{resume_data?.summary}</p>
                             </div>
                         ) : (
                             <></>
@@ -83,7 +100,7 @@ function Profile(props) {
                                 <u>
                                     <h5>{t("Education")}</h5>
                                 </u>
-                                <p>{profileData.extracted_json_data?.education}</p>
+                                <p>{resume_data?.education}</p>
                             </div>
                         ) : (
                             <></>
@@ -95,7 +112,7 @@ function Profile(props) {
                                 <u>
                                     <h5>{t("Skills")}</h5>
                                 </u>
-                                <p>{profileData.extracted_json_data?.skills}</p>
+                                <p>{resume_data?.skills}</p>
                             </div>
                         ) : (
                             <></>
@@ -107,7 +124,7 @@ function Profile(props) {
                                 <u>
                                     <h5>{t("Certifications")}</h5>
                                 </u>
-                                <p>{profileData.extracted_json_data?.certifications}</p>
+                                <p>{resume_data?.certifications}</p>
                             </div>
                         ) : (
                             <></>
@@ -120,7 +137,7 @@ function Profile(props) {
                                 <u>
                                     <h5>{t("Work Experience")}</h5>
                                 </u>
-                                <p>{profileData.extracted_json_data?.work_experience}</p>
+                                <p>{resume_data?.work_experience}</p>
                             </div>
                         ) : (
                             <></>
@@ -132,7 +149,7 @@ function Profile(props) {
                                 <u>
                                     <h5>{t("Languages")}</h5>
                                 </u>
-                                <p>{profileData.extracted_json_data?.languages}</p>
+                                <p>{resume_data?.languages}</p>
                             </div>
                         ) : (
                             <></>
