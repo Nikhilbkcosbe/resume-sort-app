@@ -11,6 +11,7 @@ import Profile from "./pages/profile";
 import decodeCookie from "./utils/decodeCookie";
 import { LOGOUT_URL } from "./config";
 import axios from "axios";
+import Jis from "./pages/jis_format";
 global.Buffer = Buffer;
 
 
@@ -61,6 +62,16 @@ function App() {
             element={
               authenticated ? (
                 <Dashboard handleLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+           <Route
+            path="/dashboard/jis"
+            element={
+              authenticated ? (
+                <Jis handleLogout={handleLogout} />
               ) : (
                 <Navigate to="/login" />
               )

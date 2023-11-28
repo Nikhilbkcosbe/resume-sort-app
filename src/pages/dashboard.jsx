@@ -5,7 +5,7 @@ import React, {
     useEffect,
 } from "react";
 import Navbar from "../components/navbar";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { AgGridReact } from "ag-grid-react";
 import * as FileSaver from 'file-saver';
@@ -43,15 +43,15 @@ function Dashboard(props) {
     let flag = false
     let columnDefs = [
         {
-            field: "extracted_json_data.name",
+            field: "extracted_json_data.person_name",
             headerName: t("Name"),
             filterParams: {
                 maxNumConditions: 3,
             },
         },
-        { field: "extracted_json_data.role", headerName: t("Role") },
+        { field: "extracted_json_data.job_title", headerName: t("Role") },
         {
-            field: "extracted_json_data.year_of_experience",
+            field: "extracted_json_data.years_of_work_experience",
             headerName: t("Experience(years)"),
             filter: "agNumberColumnFilter",
             filterParams: {
@@ -82,18 +82,13 @@ function Dashboard(props) {
             filter: false,
             cellRenderer: function (params) {
                 return (
-                    <a
-                        href={`${DOWNLOAD_RESUME}?url=${params.value.split("s3.amazonaws.com/")[1]
-                            }`}
-                        ref={(ref) => {
-                            if (!ref) return;
-                            ref.onclick = (e) => {
-                                e.stopPropagation();
-                            };
-                        }}
-                    >
-                        Pdf
-                    </a>
+                    <>
+                         {/* {console.log(params)}  */}
+                    <button onClick={()=>{
+                        dispatch(profileDetailsAction(params.data))
+                        navigate("/dashboard/jis",{state:{pdf_path:params.value.split("s3.amazonaws.com/")[1]}})}}>JIS Format</button>
+                    </>
+                   
                 );
             },
         },

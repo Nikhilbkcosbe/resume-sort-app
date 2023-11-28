@@ -11,3 +11,4 @@ export const GET_RESUME_DATA = BASE_URL + "/api/v1/resume_sort_app/dashboard/res
 export const GET_PROFILE_IMAGE = BASE_URL + "/api/v1/resume_sort_app/dashboard/profile_image"
 export const VERIFY_COOKIE = BASE_URL + "/api/v1/resume_sort_app/auth/verify"
 export const LOGOUT_URL = BASE_URL + "/api/v1/resume_sort_app/auth/logout"
+export const JIS_PDF_URL = BASE_URL + "/api/v1/resume_sort_app/dashboard/jis_pdf"
