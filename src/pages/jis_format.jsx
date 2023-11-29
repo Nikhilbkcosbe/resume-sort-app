@@ -3,20 +3,45 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import { useSelector } from 'react-redux';
 import { BASE_URL, DOWNLOAD_RESUME, JIS_PDF_URL } from '../config';
+import axios from 'axios';
 
 const Jis = (props) => {
     const { state } = useLocation();
     const profile_details = useSelector(state => state.ProfileDetailsReduxState)
     const original_resume_url = DOWNLOAD_RESUME + "?url=" + state.pdf_path
+    const jis_resume_url = JIS_PDF_URL + "?resume-id=" + profile_details._id
     const [loadingJIS, setLoadingJIS] = useState(true);
     const [loadingOriginal, setLoadingOriginal] = useState(true);
+    const [pdfFile, setPdfFile] = useState(null);
+
+    useState(async () => {
+        setLoadingOriginal(true)
+        try {
+            const response = await axios.get(original_resume_url, {
+                responseType: 'blob', // Set responseType to 'blob' to handle binary data
+            });
+
+            // Create a blob URL from the received blob data
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const pdfBlobUrl = URL.createObjectURL(blob);
+
+            // Set the PDF blob URL to the state
+            setPdfFile(pdfBlobUrl);
+        } catch (error) {
+            console.error('Error fetching PDF file:', error);
+        } finally {
+            setLoadingOriginal(false); // Set loading to false after fetching completes (or encounters an error)
+        }
+    }, [])
+
+
     const handleLoadJIS = () => {
         setLoadingJIS(false);
     };
     const handleLoadOriginal = () => {
         setLoadingOriginal(false);
     };
-    const jis_resume_url = JIS_PDF_URL + "?resume-id=" + profile_details._id
+
     return (
         <div>
 
@@ -35,10 +60,8 @@ const Jis = (props) => {
                                 </div>
                             </div>
                         )}
-                        <iframe src={original_resume_url} title='original_resume' width="100%" height="500px"
-                            onLoad={handleLoadOriginal}
+                        <embed src={pdfFile} type="application/pdf" width="100%" height="500px" />
 
-                        />
                     </div>
                     <div className='col-sm-6'>
                         {loadingJIS && (
