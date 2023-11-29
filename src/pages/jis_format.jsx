@@ -13,12 +13,16 @@ const Jis = (props) => {
     const [loadingJIS, setLoadingJIS] = useState(true);
     const [loadingOriginal, setLoadingOriginal] = useState(true);
     const [pdfFile, setPdfFile] = useState(null);
+    const [jisFile, setJisFile] = useState(null);
 
     useState(async () => {
         setLoadingOriginal(true)
         try {
             const response = await axios.get(original_resume_url, {
-                responseType: 'blob', // Set responseType to 'blob' to handle binary data
+                responseType: 'blob',
+                headers:{
+                    Accept:"application/pdf"
+                } // Set responseType to 'blob' to handle binary data
             });
 
             // Create a blob URL from the received blob data
@@ -31,6 +35,28 @@ const Jis = (props) => {
             console.error('Error fetching PDF file:', error);
         } finally {
             setLoadingOriginal(false); // Set loading to false after fetching completes (or encounters an error)
+        }
+    }, [])
+    useState(async () => {
+        setLoadingJIS(true)
+        try {
+            const response = await axios.get(jis_resume_url, {
+                responseType: 'blob',
+                headers:{
+                    Accept:"application/pdf"
+                } // Set responseType to 'blob' to handle binary data
+            });
+
+            // Create a blob URL from the received blob data
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const pdfBlobUrl = URL.createObjectURL(blob);
+
+            // Set the PDF blob URL to the state
+            setJisFile(pdfBlobUrl);
+        } catch (error) {
+            console.error('Error fetching PDF file:', error);
+        } finally {
+            setLoadingJIS(false); // Set loading to false after fetching completes (or encounters an error)
         }
     }, [])
 
@@ -72,11 +98,8 @@ const Jis = (props) => {
                                 </div>
                             </div>
                         )}
-                        <iframe src={jis_resume_url}
-                            title='jis resume' width="100%" height="500px"
-
-                            onLoad={handleLoadJIS}
-                        />
+                        <embed src={jisFile} type="application/pdf" width="100%" height="500px" />
+                   
                     </div>
 
                 </div>
